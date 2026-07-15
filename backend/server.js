@@ -20,11 +20,20 @@ const app = express();
 const PORT = process.env.PORT || 5000;
 
 // CORS configuration: Whitelist React app and Chrome Extension origins
-const allowedOrigins = ['http://localhost:5173', 'http://127.0.0.1:5173'];
+const allowedOrigins = [
+  'http://localhost:5173',
+  'http://127.0.0.1:5173',
+  'https://careervault-phi.vercel.app'
+];
 app.use(
   cors({
     origin: function (origin, callback) {
-      if (!origin || allowedOrigins.includes(origin) || origin.startsWith('chrome-extension://')) {
+      if (
+        !origin || 
+        allowedOrigins.includes(origin) || 
+        origin.endsWith('.vercel.app') || 
+        origin.startsWith('chrome-extension://')
+      ) {
         callback(null, true);
       } else {
         callback(new Error('Not allowed by CORS'));
