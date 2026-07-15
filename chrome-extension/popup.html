@@ -1,0 +1,183 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <meta charset="utf-8">
+  <title>CareerVault Assistant</title>
+  <style>
+    :root {
+      --bg-dark: #09090b;
+      --bg-panel: #18181b;
+      --brand: #6366f1;
+      --brand-hover: #4f46e5;
+      --text: #f4f4f5;
+      --text-muted: #a1a1aa;
+      --border: #27272a;
+    }
+
+    body {
+      width: 320px;
+      margin: 0;
+      padding: 16px;
+      background-color: var(--bg-dark);
+      color: var(--text);
+      font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, Helvetica, Arial, sans-serif;
+      font-size: 12px;
+    }
+
+    h3 {
+      margin: 0 0 12px 0;
+      font-size: 14px;
+      font-weight: 700;
+      display: flex;
+      align-items: center;
+      gap: 6px;
+    }
+
+    .brand-accent {
+      color: var(--brand);
+    }
+
+    .form-group {
+      margin-bottom: 12px;
+    }
+
+    label {
+      display: block;
+      font-size: 9px;
+      font-weight: 600;
+      text-transform: uppercase;
+      letter-spacing: 0.05em;
+      color: var(--text-muted);
+      margin-bottom: 4px;
+    }
+
+    input, textarea {
+      width: 100%;
+      box-sizing: border-box;
+      background-color: var(--bg-panel);
+      border: 1px solid var(--border);
+      border-radius: 6px;
+      padding: 8px;
+      color: var(--text);
+      font-size: 11px;
+      outline: none;
+      transition: border-color 0.2s;
+    }
+
+    input:focus, textarea:focus {
+      border-color: var(--brand);
+    }
+
+    textarea {
+      height: 60px;
+      resize: none;
+    }
+
+    .buttons-container {
+      display: flex;
+      flex-direction: column;
+      gap: 8px;
+      margin-top: 14px;
+    }
+
+    button {
+      width: 100%;
+      border-radius: 6px;
+      padding: 10px;
+      font-size: 11px;
+      font-weight: 600;
+      cursor: pointer;
+      transition: all 0.2s;
+      box-sizing: border-box;
+    }
+
+    #submit-btn {
+      background-color: var(--brand);
+      color: white;
+      border: none;
+    }
+
+    #submit-btn:hover {
+      background-color: var(--brand-hover);
+    }
+
+    #export-btn {
+      background-color: transparent;
+      border: 1px solid var(--border);
+      color: var(--text-muted);
+    }
+
+    #export-btn:hover {
+      border-color: var(--brand);
+      color: var(--text);
+    }
+
+    button:disabled {
+      opacity: 0.5;
+      cursor: not-allowed;
+    }
+
+    .status {
+      padding: 8px;
+      border-radius: 6px;
+      margin-bottom: 12px;
+      display: none;
+      font-size: 10px;
+      font-weight: 500;
+    }
+
+    .status.error {
+      display: block;
+      background-color: rgba(239, 68, 68, 0.1);
+      border: 1px solid rgba(239, 68, 68, 0.2);
+      color: #ef4444;
+    }
+
+    .status.success {
+      display: block;
+      background-color: rgba(16, 185, 129, 0.1);
+      border: 1px solid rgba(16, 185, 129, 0.2);
+      color: #10b981;
+    }
+  </style>
+</head>
+<body>
+  <h3>🚀 <span class="brand-accent">CareerVault</span> Tracker</h3>
+  
+  <div id="status-panel" class="status"></div>
+
+  <form id="tracker-form">
+    <div class="form-group">
+      <label for="companyName">Company Name</label>
+      <input type="text" id="companyName" required placeholder="e.g. Google">
+    </div>
+
+    <div class="form-group">
+      <label for="role">Role Title</label>
+      <input type="text" id="role" required placeholder="e.g. Software Engineer">
+    </div>
+
+    <div class="form-group">
+      <label for="salary">Salary / CTC (LPA)</label>
+      <input type="number" id="salary" placeholder="e.g. 15">
+    </div>
+
+    <div class="form-group">
+      <label for="jobUrl">Job Description URL</label>
+      <input type="url" id="jobUrl" required readonly>
+    </div>
+
+    <div class="form-group">
+      <label for="notes">Quick Notes</label>
+      <textarea id="notes" placeholder="Adding specific requirements or OA schedules..."></textarea>
+    </div>
+
+    <div class="buttons-container">
+      <button type="submit" id="submit-btn">Save Application</button>
+      <button type="button" id="export-btn">Export All to Excel (CSV)</button>
+    </div>
+  </form>
+
+  <script src="popup.js"></script>
+</body>
+</html>

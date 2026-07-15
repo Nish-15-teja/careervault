@@ -1,0 +1,33 @@
+{
+  "manifest_version": 3,
+  "name": "CareerVault AI Placement Assistant",
+  "version": "1.0.0",
+  "description": "Automatically capture and track job listings directly to your CareerVault dashboard.",
+  "permissions": [
+    "activeTab",
+    "cookies",
+    "downloads"
+  ],
+  "host_permissions": [
+    "http://localhost/*",
+    "http://127.0.0.1/*",
+    "https://docs.google.com/*"
+  ],
+  "background": {
+    "service_worker": "background.js"
+  },
+  "content_scripts": [
+    {
+      "matches": [
+        "http://localhost:5000/uploads/mock_google_form.html",
+        "http://127.0.0.1:5000/uploads/mock_google_form.html",
+        "https://docs.google.com/forms/*"
+      ],
+      "js": ["content.js"]
+    }
+  ],
+  "action": {
+    "default_popup": "popup.html",
+    "default_title": "CareerVault Assistant"
+  }
+}
