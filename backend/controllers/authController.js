@@ -9,8 +9,8 @@ const generateToken = (res, userId) => {
 
   res.cookie('jwt', token, {
     httpOnly: true, // Prevents Javascript XSS reading of the token
-    secure: process.env.NODE_ENV !== 'development', // Uses HTTPS in production
-    sameSite: 'strict', // CSRF protection
+    secure: true,   // Must be true for sameSite: 'none'
+    sameSite: 'none',
     maxAge: 30 * 24 * 60 * 60 * 1000 // 30 days
   });
 };
@@ -81,6 +81,8 @@ export const loginUser = async (req, res) => {
 export const logoutUser = async (req, res) => {
   res.cookie('jwt', '', {
     httpOnly: true,
+    secure: true,
+    sameSite: 'none',
     expires: new Date(0) // Immediately clear the cookie value
   });
   res.status(200).json({ message: 'Logged out successfully' });
