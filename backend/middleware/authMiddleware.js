@@ -19,6 +19,9 @@ export const protect = async (req, res, next) => {
 
       // Fetch user profile and exclude the password hash field
       req.user = await User.findById(decoded.userId).select('-password');
+      if (!req.user) {
+        return res.status(401).json({ message: 'Not authorized, user not found' });
+      }
 
       next(); // Pass control to the next handler
     } catch (error) {
