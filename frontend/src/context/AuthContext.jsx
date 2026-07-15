@@ -25,6 +25,9 @@ export function AuthProvider({ children }) {
   // Handle User Registration request
   const register = async (name, email, password) => {
     const res = await api.post('/auth/register', { name, email, password });
+    if (res.data && res.data.token) {
+      localStorage.setItem('token', res.data.token);
+    }
     setUser(res.data);
     return res.data;
   };
@@ -32,14 +35,23 @@ export function AuthProvider({ children }) {
   // Handle User Login request
   const login = async (email, password) => {
     const res = await api.post('/auth/login', { email, password });
+    if (res.data && res.data.token) {
+      localStorage.setItem('token', res.data.token);
+    }
     setUser(res.data);
     return res.data;
   };
 
   // Handle User Logout request
   const logout = async () => {
-    await api.post('/auth/logout');
-    setUser(null);
+    try {
+      await api.post('/auth/logout');
+    } catch (err) {
+      console.error('Logout request failed', err);
+    } finally {
+      localStorage.removeItem('token');
+      setUser(null);
+    }
   };
 
   return (

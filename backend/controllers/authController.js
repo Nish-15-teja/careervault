@@ -13,6 +13,8 @@ const generateToken = (res, userId) => {
     sameSite: 'none',
     maxAge: 30 * 24 * 60 * 60 * 1000 // 30 days
   });
+
+  return token;
 };
 
 // @desc    Register a new user
@@ -34,11 +36,12 @@ export const registerUser = async (req, res) => {
     const user = await User.create({ name, email, password });
 
     if (user) {
-      generateToken(res, user._id);
+      const token = generateToken(res, user._id);
       res.status(201).json({
         _id: user._id,
         name: user.name,
-        email: user.email
+        email: user.email,
+        token
       });
     } else {
       res.status(400).json({ message: 'Invalid user data received' });
@@ -62,11 +65,12 @@ export const loginUser = async (req, res) => {
 
     // matchPassword is our instance method on the User model
     if (user && (await user.matchPassword(password))) {
-      generateToken(res, user._id);
+      const token = generateToken(res, user._id);
       res.status(200).json({
         _id: user._id,
         name: user.name,
-        email: user.email
+        email: user.email,
+        token
       });
     } else {
       res.status(401).json({ message: 'Invalid email or password' });
